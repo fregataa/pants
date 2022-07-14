@@ -1055,23 +1055,20 @@ def normalize_module_mapping(
     return FrozenDict({canonicalize_project_name(k): tuple(v) for k, v in (mapping or {}).items()})
 
 
-class PythonRequirementResolveField(PythonResolveField):
-    alias = "resolve"
-    required = False
-    help = softwrap(
-        """
-        The resolve from `[python].resolves` that this requirement is included in.
+# TODO: See https://github.com/pantsbuild/pants/issues/16190.
+"""
+The resolve from `[python].resolves` that this requirement is included in.
 
-        If not defined, will default to `[python].default_resolve`.
+If not defined, will default to `[python].default_resolve`.
 
-        When generating a lockfile for a particular resolve via the `generate-lockfiles` goal,
-        it will include all requirements that are declared with that resolve.
-        First-party targets like `python_source` and `pex_binary` then declare which resolve
-        they use via their `resolve` field; so, for your first-party code to use a
-        particular `python_requirement` target, that requirement must be included in the resolve
-        used by that code.
-        """
-    )
+When generating a lockfile for a particular resolve via the `generate-lockfiles` goal,
+it will include all requirements that are declared with that resolve.
+First-party targets like `python_source` and `pex_binary` then declare which resolve
+they use via their `resolve` field; so, for your first-party code to use a
+particular `python_requirement` target, that requirement must be included in the resolve
+used by that code.
+"""
+PythonRequirementResolveField = PythonResolveField
 
 
 class PythonRequirementTarget(Target):
